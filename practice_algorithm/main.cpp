@@ -321,6 +321,56 @@ char* multiply(char* num1, char* num2) {
     return result;
 }
 
+bool searchMatrix(int** matrix, int matrixRowSize, int matrixColSize, int target) {
+    int rowindex = 0;
+    for(int i = 1 ; i < matrixRowSize ; i++)
+    {
+        if(matrix[i-1][0] < target && matrix[i][0] > target)
+        {
+            rowindex = i-1;
+            break;
+        }
+    }
+    for(int j = 0 ; j < matrixColSize ; j++)
+    {
+        if(matrix[rowindex][j] == target){return true;}
+    }
+    return false;
+}
+
+
+void Myquicksort(int *data, int left, int right)
+{
+    int i = 0 , j = 0 , pivot = 0;
+    if(left >= right){return;}
+    pivot = data[left];// initial pivot is the first num
+    i = left+1;//從pivot的右邊一格開始掃
+    j = right; //從最右邊開始掃
+    
+    while(true)
+    {
+        while( i <= right )
+        {
+            if(pivot < data[i]){break;}
+            i++;
+        }
+        while( j > left)
+        {
+            if(data[j] < pivot){break;}
+            j--;
+        }
+        if(i>j){break;}
+        swap(&data[i] , &data[j]);
+    }
+    swap(&data[left] , &data[j]);//pivot swap to smallest num
+    Myquicksort(data, left, j-1);
+    Myquicksort(data, j + 1, right);
+}
+
+
+
+
+
 
 int main(int argc, const char * argv[]) {
     // insert code here...
@@ -336,7 +386,27 @@ int main(int argc, const char * argv[]) {
     //double a = Mysqrt(5);
     
     //double a = Mypow(2,-3);
-    char *r = multiply("42","13");
+    
+    //char *r = multiply("42","13");
+    /*
+    int **A = new int*[3];
+    for(int i = 0 ; i< 3 ;i++)
+    {A[i] = new int[3];}
+    A[0][0] = 1;
+    A[0][1] = 4;
+    A[0][2] = 7;
+    A[1][0] = 10;
+    A[1][1] = 14;
+    A[1][2] = 17;
+    A[2][0] = 20;
+    A[2][1] = 24;
+    A[2][2] = 27;
+    bool r = searchMatrix(A,3,3,14);
+     
+     */
+    
+    int A[] = {30, 10, 88, 50, 2};
+    Myquicksort(A,0,5-1);
     //std::cout << Result[0] << Result[1];
     //printf("  %s %s",Result[0], Result[1]);
     return 0;
