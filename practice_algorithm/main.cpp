@@ -119,17 +119,159 @@ char **ReverseString2(char *Input, char* delim)
     return output;
 }
 
+int bitcount(unsigned int n)
+{
+    int count = 0;
+    while(n)
+    {
+        if(n & 1){
+            count++;
+        }
+        n=n>>1;
+    }
+    return count;
+}
+
+int Adder(int a, int b)
+{
+    int carry = 0;
+    while(b)
+    {
+        carry = (a&b) << 1;
+        a = a^b;
+        b = carry;
+    }
+    return a;
+}
+
+int Myatoi(char *input)
+{
+    int len = strlen(input);
+    int sum = 0;
+    for(int i = 0 ; i < len ; i++)
+    {
+        if(input[i] >='0' && input[i]  <='9')
+        {
+            sum = sum*10 + input[i]-'0';
+        }
+        else{return sum;}
+    }
+    return sum;
+    
+}
+int Fibonacci(int n)
+{
+    int *temp = new int[n+1];
+    temp[0] = 1;
+    temp[1] = 1;
+    for(int i = 2 ; i < n ; i++)
+    {
+        temp[i] = temp[i-1]+temp[i-2];
+    }
+    return temp[n];
+}
+
+int IntegerReverse(int x)
+{
+    int sigma = 0;
+    int num = 0;
+    int result = 0;
+    if(x < 0){sigma = -1;}
+    num = x * sigma;
+    while(num)
+    {
+        result *= 10;
+        result += num%10;
+        num /= 10;
+    }
+    result = result*sigma;
+    return result;
+}
+
+
+int ReverseBit(int x, int maxbit)
+{
+    int count = 0;
+    for(int i = 0 ; i < maxbit; i++)
+    {
+        count = count << 1;
+        if(x & 1)
+        {count++;}
+        x = x>>1;
+    }
+    return count;
+}
+
+char* MyStrstr(char *input, char* indexString)
+{
+    int inputlen = strlen(input);
+    int indexlen = strlen(indexString);
+    int match_index = 0;
+    bool checkflag = false;
+    int i = 0 , j = 0;
+    while(i < inputlen && j < indexlen)
+    {
+        if(input[i] == indexString[j])
+        {
+            if(!checkflag)
+            {
+                checkflag = true;
+                match_index = i;
+            }
+            i++;
+            j++;
+        }
+        else{
+            i++;
+            j = 0;
+            checkflag = false;
+            match_index = 0;
+        }
+    }
+    if(j == indexlen)
+    {return &input[match_index];}
+    else{return input;}
+}
+
+double Mysqrt(int num)
+{
+    float start = 0;
+    float end = num/2+1;
+    float sum = 0;
+    char temp[10]={0};
+    int count = 0;
+    while(true){
+        sum = (start + end) /2;
+        sprintf(temp,"%0.2f",sum);
+        sum = atof(temp);
+        if(sum * sum == num)
+        {break;}
+        else if(sum * sum < num)
+        {start = sum;}
+        else{
+            end = sum;
+        }
+        count++;
+        if(count >= 500){break;}
+    }
+    return sum;
+}
+
 int main(int argc, const char * argv[]) {
     // insert code here...
     //int A[] = {9,5,2,3,7,4};
-    char B[] = "Hello My dear";
+    //char B[] = "Hello My dear";
     //bubblesort(A,6);
     //int *Result = twoSum(A,6,12);
-    char **Result = ReverseString2(B," ");
+    //char **Result = ReverseString2(B," ");
     
+    //int c = bitcount(9);
+    //char* result = MyStrstr("rabbg tty","bbg");
+    
+    double a = Mysqrt(5);
     
     //std::cout << Result[0] << Result[1];
-    printf("  %s %s",Result[0], Result[1]);
+    //printf("  %s %s",Result[0], Result[1]);
     return 0;
 }
 
