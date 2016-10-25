@@ -81,16 +81,55 @@ int* twoSum(int* nums, int numsSize, int target)
 
 
 
+int spilt(char **output, char *input, const char *delim)
+{
+    int spiltcount = 0;
+    char *temp = strtok(input, delim);
+    while (temp != NULL)
+    {
+        output[spiltcount] = temp;
+        temp = strtok(NULL, delim);
+        spiltcount++;
+    }
+    return spiltcount;
+}
+char *ReverString(char *Input)
+{
+    int len = strlen(Input);
+    char *temp = new char[len];
+    for(int i = 0 ; i < len ; i++)
+    {
+        int j = (int)len - i - 1;
+        temp[i] = Input[j];
+    }
+    return temp;
+}
 
+char **ReverseString2(char *Input, char* delim)
+{
+    int len = strlen(Input);
+    char **temp2 = new char*[len];
+    char **output = new char*[len];
+    int count =  spilt(temp2,Input,delim);
+    for(int i = 0 ; i < count; i++)
+    {
+        int j= count - 1 - i;
+        output[i] = temp2[j];
+    }
+    return output;
+}
 
 int main(int argc, const char * argv[]) {
     // insert code here...
-    int A[] = {9,5,2,3,7,4};
+    //int A[] = {9,5,2,3,7,4};
+    char B[] = "Hello My dear";
     //bubblesort(A,6);
-    int *Result = twoSum(A,6,12);
+    //int *Result = twoSum(A,6,12);
+    char **Result = ReverseString2(B," ");
+    
     
     //std::cout << Result[0] << Result[1];
-    printf("  %d %d",Result[0], Result[1]);
+    printf("  %s %s",Result[0], Result[1]);
     return 0;
 }
 
