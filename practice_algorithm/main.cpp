@@ -256,6 +256,71 @@ double Mysqrt(int num)
     }
     return sum;
 }
+/* 
+ 1   2    3     4
+ 3   9    27    81
+ 
+ n = 110 binary = 6
+ 
+ 3^6 = 3^(1*0) * 3^(2*1) * 3^(4*1) = 3^(4+2)
+ */
+double Mypow(double input, int n)
+{
+    double result = 1;
+    bool neg = false;
+    if(n < 0){neg = true;}
+    int ABSN = abs(n);
+    while(ABSN)
+    {
+        if(ABSN & 1){result *= input;}
+        ABSN = ABSN >> 1;
+        input *= input;
+    }
+    if(neg)
+    return 1/result;
+    else{return result;}
+}
+
+/*
+ 
+ 13
+ 42
+----
+ 26      for  2   carrycount+1 -> 2*10 ->20    for  6  carrycount == 0   20+6 = 26
+52       for 52   k+1 -> 52*10 = 520
+----
+546
+ 
+ */
+char* multiply(char* num1, char* num2) {
+    
+    int num1_len = strlen(num1);
+    int num2_len = strlen(num2);
+    int sum = 0;
+    int carrycount = 0;
+    int *eachOperate = new int[num1_len+num2_len];
+    char *result = new char [num1_len + num2_len];
+    int i = num1_len - 1, j = num2_len-1;
+    int k = 0;
+    for(i = num1_len - 1 ; i >= 0 ; i--)
+    {
+        carrycount = 0;
+        for(j = num2_len - 1 ; j >= 0 ; j--)
+        {
+            if(carrycount > 0)
+            eachOperate[k] += (num1[i]-'0')*(num2[j]-'0') * carrycount * 10;
+            else{eachOperate[k] += (num1[i]-'0')*(num2[j]-'0');}
+            carrycount++;
+        }
+        if(k > 0)
+        {eachOperate[k] = eachOperate[k] * k * 10;}
+        sum += eachOperate[k];
+        k++;
+    }
+    sprintf(result,"%d",sum);
+    return result;
+}
+
 
 int main(int argc, const char * argv[]) {
     // insert code here...
@@ -268,8 +333,10 @@ int main(int argc, const char * argv[]) {
     //int c = bitcount(9);
     //char* result = MyStrstr("rabbg tty","bbg");
     
-    double a = Mysqrt(5);
+    //double a = Mysqrt(5);
     
+    //double a = Mypow(2,-3);
+    char *r = multiply("42","13");
     //std::cout << Result[0] << Result[1];
     //printf("  %s %s",Result[0], Result[1]);
     return 0;
